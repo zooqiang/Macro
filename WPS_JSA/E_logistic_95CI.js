@@ -1,4 +1,4 @@
-Attribute Module_Name = "E_logistic_95CI"
+
 function E_logistic_95CI() {
     var selection = Application.Selection;
     

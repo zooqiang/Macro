@@ -1,4 +1,4 @@
-Attribute Module_Name = "E_anovaTest1"
+
 function E_anovaTest() {
 
     try {

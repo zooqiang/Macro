@@ -1,4 +1,4 @@
-Attribute Module_Name = "E_Cox_95CI"
+
 function E_Cox_95CI() {
     var selection = Application.Selection;
     

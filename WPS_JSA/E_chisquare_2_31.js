@@ -1,11 +1,5 @@
-Attribute Module_Name = "E_chisquare_2_31"
-function E_chiSquareTest_2x3() {
-	// 如果验证失败（用户取消或未授权），函数会直接返回
-      if (!checkZouAndVerifyUser()) {
-        alert("操作终止：未通过验证");
-        return;
-    }    
-   // 只有验证通过或已有"邹"字样才会继续执行 
+
+
     var selection = Application.Selection;
     if (!selection) {
         alert("请先选中表格中的单元格。");

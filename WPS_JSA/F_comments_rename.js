@@ -1,4 +1,4 @@
-Attribute Module_Name = "F_comments_rename"
+
 function ChangeCommentAuthorWithInput() {
     var doc = Application.ActiveDocument;
     

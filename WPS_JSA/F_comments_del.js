@@ -1,4 +1,4 @@
-Attribute Module_Name = "F_comments_del"
+
 function DeleteAllComments() {
     // 获取当前活动文档
     var doc = Application.ActiveDocument;
