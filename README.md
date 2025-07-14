@@ -2,7 +2,7 @@ Macro Office Automation Toolkit
 Project Introduction
 This project provides a statistics verification system for medical papers based on Office macro languages, aiming to address the issues of low efficiency, poor accuracy, and high statistical knowledge requirements for editors in the current verification process of medical journals. By utilizing Office macro languages (including Microsoft VBA macros or WPS Office JavaScript macros), this system can automatically verify common statistical analysis methods in medical journal papers within word processing software (such as Microsoft Word or WPS Office). The statistical methods that can be implemented include chi-square tests (2×2 and 2×3), t-tests, analysis of variance, logistic regression, Cox regression, and other commonly used medical statistics methods.
 Function List
-Users can select the data to be verified using the mouse to trigger the macro command. The macro command will automatically complete the statistical analysis verification and display the results directly in the word processing software interface, achieving one-click automatic detection without the need for additional external software or tools.
+Users can select the data to be verified using the mouse to trigger the macro command. The macro command will automatically complete the statistical analysis verification and display the results directly in the word processing software interface (comment), achieving one-click automatic detection without the need for additional external software or tools.
 Usage
 Environment Dependencies
 Microsoft Office 2016+ (VBA macros) for Windows systems (macOS/Linux are not supported temporarily)
@@ -21,7 +21,7 @@ git clone https://github.com/zooqiang/Macro.git
 。  
 
 ## 功能列表  
-- 用户可通过鼠标选取待验证的数据，触发宏命令执行，宏命令自动完成统计分析验证，并将验证结果直接显示于文字处理软件界面中，实现一键式自动检测，无需借助额外的外部软件或工具。
+- 用户可通过鼠标选取待验证的数据，触发宏命令执行，宏命令自动完成统计分析验证，并将验证结果直接显示于文字处理软件界面中（批注），实现一键式自动检测，无需借助额外的外部软件或工具。
 
 ## 使用方法  
 ### 环境依赖  
