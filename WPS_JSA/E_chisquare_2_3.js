@@ -1,6 +1,5 @@
-
+Attribute Module_Name = "E_chisquare_2_3"
 function E_chiSquareTest_2x3() {
-
     var selection = Application.Selection;
     if (!selection) {
         alert("请先选中表格中的单元格。");
@@ -8,8 +7,6 @@ function E_chiSquareTest_2x3() {
     }
 
     var cellCount = selection.Cells.Count;
-    var rowCount = selection.Rows.Count;
-    var colCount = selection.Columns.Count;
 
     // 存放观测值
     var observed = [];
@@ -21,36 +18,6 @@ function E_chiSquareTest_2x3() {
             cellText = cellText.replace(/\r/g, "").normalize("NFKC"); // 清理文本
             var value = extractNumber(cellText);
             observed.push(value);
-        }
-        
-        // 根据行列形状构建2x3矩阵
-        if (rowCount === 2 && colCount === 3) {
-            // 2行3列：按行读取
-            table = [
-                [observed[0], observed[1], observed[2]],
-                [observed[3], observed[4], observed[5]]
-            ];
-        } else if (rowCount === 3 && colCount === 2) {
-            // 3行2列：按列读取（转置）
-            table = [
-                [observed[0], observed[2], observed[4]], // 第一列数据
-                [observed[1], observed[3], observed[5]]  // 第二列数据
-            ];
-        } else if (rowCount === 6 && colCount === 1) {
-            // 6行1列：前3行为第一组，后3行为第二组
-            table = [
-                [observed[0], observed[1], observed[2]],
-                [observed[3], observed[4], observed[5]]
-            ];
-        } else if (rowCount === 1 && colCount === 6) {
-            // 1行6列：前3列为第一组，后3列为第二组
-            table = [
-                [observed[0], observed[1], observed[2]],
-                [observed[3], observed[4], observed[5]]
-            ];
-        } else {
-            alert("请选择2×3、3×2、6×1或1×6的单元格区域！");
-            return;
         }
     }
     // 模式二：选择 3 个单元格，格式为 "n (N%)"
@@ -68,11 +35,6 @@ function E_chiSquareTest_2x3() {
             observed.push(success);
             observed.push(fail);
         }
-        // 固定构建2x3矩阵（3组数据转置）
-        table = [
-            [observed[0], observed[2], observed[4]], // A1, A2, A3
-            [observed[1], observed[3], observed[5]]  // B1, B2, B3
-        ];
     } else {
         alert("请选择 3 个或 6 个单元格！");
         return;
@@ -82,6 +44,20 @@ function E_chiSquareTest_2x3() {
     if (observed.some(isNaN)) {
         alert("数据无效，请确保单元格中包含有效的数字。");
         return;
+    }
+
+    // 构建 2x3 矩阵
+    var table = [];
+    if (cellCount === 6) {
+        table = [
+            [observed[0], observed[1], observed[2]],
+            [observed[3], observed[4], observed[5]]
+        ];
+    } else if (cellCount === 3) {
+        table = [
+            [observed[0], observed[2], observed[4]], // A1, A2, A3
+            [observed[1], observed[3], observed[5]]  // B1, B2, B3
+        ];
     }
 
     // 计算行总和、列总和、总样本量
@@ -107,8 +83,8 @@ function E_chiSquareTest_2x3() {
     }
 
     // 自由度 df = (2-1)*(3-1) = 2
-// 在E_chiSquareTest_2x3函数中修改P值计算部分
-var pValue = 1 - chi2cdf(chiSquare, 2); // 正确的P值计算方式
+    var pValue = chi2cdf(chiSquare, 2);
+
     // 构造输出结果
     var result = "观测数据：\r\n";
     result += "A1: " + table[0][0] + ", A2: " + table[0][1] + ", A3: " + table[0][2] + "\r\n";
@@ -121,7 +97,6 @@ var pValue = 1 - chi2cdf(chiSquare, 2); // 正确的P值计算方式
     selection.Comments.Add(selection.Range, result + "\n");
 }
 
-// 其余辅助函数保持不变（chi2cdf, erf, gamma_p 等）
 // 卡方分布累积函数（近似）
 function chi2cdf(x, df) {
     if (df === 1) return 1 - erf(Math.sqrt(x / 2));
@@ -225,19 +200,12 @@ function extractNumberBeforeParenthesis(text) {
 }
 
 // 提取括号内的数字（百分比对应的总数）
-// 提取括号内的数字（百分比对应的总数）
 function extractNumberAfterParenthesis(text) {
     var posStart = text.indexOf("(");
     var posEnd = text.indexOf(")");
     if (posStart > 0 && posEnd > posStart) {
-        var innerText = text.substring(posStart + 1, posEnd).trim();
-        var percent = parseFloat(innerText.replace("%", ""));
-        var numBefore = extractNumberBeforeParenthesis(text);
-        
-        // 计算总数 = (numBefore / percent) * 100
-        if (percent > 0) {
-            return Math.round((numBefore / percent) * 100);
-        }
+        var numStr = text.substring(posStart + 1, posEnd).trim().replace("%", "");
+        return Math.round(parseFloat(numStr) * 10); // 如 50% → 10 → 总数=20
     }
     return 0;
 }
